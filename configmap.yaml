@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dental-node-app-config
+data:
+  PORT: "3000"
+  MYSQL_HOST: "dental-app-instance.cdo8o8ke64q1.us-east-1.rds.amazonaws.com"
+  MYSQL_USER: "admin"
+  MYSQL_PASS: "aLEE1lAeWl"
+  MYSQL_DATABASE: "dental_office"
+  MYSQL_PORT: "3306"
+  SERVER_TOKEN_ISSUER: "NoelIsTheSecret"

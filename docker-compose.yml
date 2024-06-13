@@ -1,0 +1,46 @@
+version: "3.2"
+services:
+  nodejs:
+    build:
+      context: .
+    image: ohsomangelo/dental-app
+    networks:
+      - frontend
+      - backend
+    environment:
+      - MYSQL_HOST=dental-mysql-app
+      - MYSQL_USER=admin
+      - MYSQL_PASS=nothing
+      - MYSQL_DB=dental_office
+    volumes:
+      - ./www/:/var/www/html/
+    ports:
+      - "1111:1111"
+    container_name: dental-app
+  mysql:
+    image: mysql:5.7
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=nothing
+      - MYSQL_DATABASE=dental_office
+    container_name: dental-mysql-app
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    depends_on:
+      - mysql
+    networks:
+      - backend
+    ports:
+      - "30002:80"
+    environment:
+      - PMA_HOST=dental-mysql-app
+      - PMA_PORT= 3306
+    volumes:
+      - /sessions
+    container_name: dental-phpmyadmin-app
+networks:
+  frontend:
+  backend:

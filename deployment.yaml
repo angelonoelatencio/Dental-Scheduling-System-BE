@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dental-node-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dental-node-app
+  template:
+    metadata:
+      labels:
+        app: dental-node-app
+    spec:
+      containers:
+        - name: dental-node-app
+          image: 590183682552.dkr.ecr.us-east-1.amazonaws.com/dental-node-api
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dental-node-app-config
+                  key: PORT
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: dental-node-app-config
+                  key: MYSQL_HOST
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: dental-node-app-config
+                  key: MYSQL_USER
+            - name: MYSQL_PASS
+              valueFrom:
+                configMapKeyRef:
+                  name: dental-node-app-config
+                  key: MYSQL_PASS
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: dental-node-app-config
+                  key: MYSQL_DATABASE
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dental-node-app-config
+                  key: MYSQL_PORT
+            - name: SERVER_TOKEN_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: dental-node-app-config
+                  key: SERVER_TOKEN_ISSUER
